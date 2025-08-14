@@ -535,7 +535,7 @@ class BDMFile:
         """
         if not self.writable: raise UnsupportedOperation("Not writable")
         if path is None:path = self.path
-        else: ensure_class(path, Path)
+        else: path = ensure_class(path, Path)
 
 
         if path.exists(): old_file = path.rename(path.parent / (path.name + ".old"))

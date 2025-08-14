@@ -152,7 +152,7 @@ class Section(HierarchizedObject):
             data (dict, optional): Additional item data.
         """
         if name is None: name = uuid1().hex
-        self[name] = Item(self._parent, title, content, image_id, level, data)
+        self[name] = Item(self._parent, title, content, level, data, image_id=image_id)
     
     def remove_item(self, name: str):
         """

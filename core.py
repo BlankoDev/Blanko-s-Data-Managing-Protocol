@@ -102,7 +102,7 @@ class Item(HierarchizedObject):
         Returns:
             Image: The image object.
         """
-        io = self._parent.info.open_file(self.image_id)
+        io = self._parent.open_file(self.image_id, "rb")
         return Image.open(io)
     
     def export_image(self, path: str | Path):
@@ -134,7 +134,7 @@ class Section(HierarchizedObject):
 
         self.type = type
         self.description = description
-        self._content = {}
+        self._content : dict[str, Item] = {}
         for item_key in content:
             item = content[item_key]
             self._content[item_key] = Item(parent, **item)
@@ -224,7 +224,7 @@ class Section(HierarchizedObject):
         if not self._parent.readable: raise UnsupportedOperation("Not readable")
         return self._content.__contains__(key)
     
-    def __getitem__(self, key: str):
+    def __getitem__(self, key: str) -> Item:
         """
         Get an item by key.
 
@@ -552,7 +552,7 @@ class BDMFile:
 
             for file_id in self.info.files:
                 file = self.info.files[file_id]
-                arcname = file
+                arcname = f"files/{file}"
                 temp_path = self._internal_files_dir / file
                 zip_file.write(temp_path, arcname)
             

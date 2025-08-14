@@ -1,0 +1,3 @@
+# required modules for this project
+# use "pip install -r requirements.txt"
+pillow
